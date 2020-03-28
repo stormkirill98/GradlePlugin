@@ -1,15 +1,27 @@
 group = "org.example"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
-class GreetingPlugin : Plugin<Project> {
-    override fun apply(project: Project) {
-        project.task("hello") {
-            doLast {
-                println("Hello from the GreetingPlugin")
-            }
+plugins {
+    groovy
+}
+
+dependencies {
+    implementation(gradleApi())
+    implementation(localGroovy())
+}
+
+buildscript {
+    repositories {
+        flatDir {
+            dirs("../build/libs")
         }
+    }
+
+    dependencies {
+        classpath(group = "org.example", name = "GradlePlugin", version = "1.0")
     }
 }
 
-// Apply the plugin
-apply<GreetingPlugin>()
+apply {
+    plugin("org.example.PrintFilePlugin")
+}
