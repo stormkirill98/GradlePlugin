@@ -113,3 +113,6 @@ fabric.properties
 hs_err_pid*
 
 !/.idea/
+/gradle/
+/gradlew
+/gradlew.bat
