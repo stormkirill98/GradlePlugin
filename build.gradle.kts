@@ -2,26 +2,15 @@ group = "org.example"
 version = "1.0"
 
 plugins {
-    groovy
+    java
+    kotlin("jvm") version "1.3.70"
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
-    implementation(gradleApi())
-    implementation(localGroovy())
-}
-
-buildscript {
-    repositories {
-        flatDir {
-            dirs("../build/libs")
-        }
-    }
-
-    dependencies {
-        classpath(group = "org.example", name = "GradlePlugin", version = "1.0")
-    }
-}
-
-apply {
-    plugin("org.example.PrintFilePlugin")
+    compile(gradleApi())
+    implementation(kotlin("stdlib-jdk8"))
 }
