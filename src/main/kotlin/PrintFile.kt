@@ -1,7 +1,7 @@
-import org.gradle.api.tasks.TaskAction
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.TaskAction
 import java.io.File
 
 const val SKIP_PREFIX = "#skip"
@@ -14,21 +14,25 @@ class PrintFilePlugin : Plugin<Project> {
 
 open class PrintFileTask : DefaultTask() {
     @TaskAction
-    fun printFile(filePath: String) {
-        val file = File(filePath)
+    fun printFile() {
+        if (project.hasProperty("filePath")) {
+            val file = File(project.property("filePath") as String)
 
-        var countSkipLines = 0
-        file.forEachLine { line ->
-            if (countSkipLines > 0) { // skip line
-                countSkipLines--
-            } else {
-                val prefix = getStartPrefixValue(line)
-                if (prefix == null) { // print line
-                    println(line)
-                } else { // get skip lines number
-                    countSkipLines = getCountSkipLines(prefix)
+            var countSkipLines = 0
+            file.forEachLine { line ->
+                if (countSkipLines > 0) { // skip line
+                    countSkipLines--
+                } else {
+                    val prefix = getStartPrefixValue(line)
+                    if (prefix == null) { // print line
+                        println(line)
+                    } else { // get skip lines number
+                        countSkipLines = getCountSkipLines(prefix)
+                    }
                 }
             }
+        } else {
+            // TODO print ERROR
         }
     }
 
