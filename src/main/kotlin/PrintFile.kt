@@ -16,7 +16,10 @@ open class PrintFileTask : DefaultTask() {
     @TaskAction
     fun printFile() {
         if (project.hasProperty("filePath")) {
-            val file = File(project.property("filePath") as String)
+            val filePath = project.property("filePath") as String
+            val file = File(filePath)
+
+            println("$filePath\n")
 
             var countSkipLines = 0
             file.forEachLine { line ->
@@ -32,7 +35,7 @@ open class PrintFileTask : DefaultTask() {
                 }
             }
         } else {
-            // TODO print ERROR
+            println("Parameter filePath not set")
         }
     }
 
